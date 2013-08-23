@@ -12,13 +12,13 @@ from convolve_match_makefits import convolve_and_match
 from sed_from_dict import sed_from_dict,plot_sed
 from viewer import load_data,viewer,dictviewer
 
-def make_plots(dirname, fnames, vmin=-1000, vmax=5000):
+def make_plots(dirname, fnames):
     # get the highest-level directory, assume it is the target source ID
     obj = os.path.split(dirname)[-1]
 
     for fn in fnames:
         # each band gets listed...
-        if 'band0' not in fn:
+        if 'band0' not in fn or '.sav' not in fn:
             continue
         # templates:
         # coadd_cleanband0in_clean_music_20130815_jk000.sav
@@ -30,21 +30,25 @@ def make_plots(dirname, fnames, vmin=-1000, vmax=5000):
 
         data = load_data(os.path.join(dirname,obs))
         sm,us = convolve_and_match(data,obj,writefits=False)
+        vmin = max([sm[2].min(),-1000])
+        vmax = max([sm[2].max(),5000])
+
+        prefix = os.path.join(dirname,obj+obs)
 
         pl.clf()
         viewer(data, vmin=vmin, vmax=vmax, cb=True)
         pl.title(obj)
-        pl.savefig(os.path.join(dirname,obs)+"_quicklook.png",bbox_inches='tight')
+        pl.savefig(prefix+"_quicklook.png",bbox_inches='tight')
 
         pl.clf()
         dictviewer(sm, vmin=vmin, vmax=vmax, cb=True)
         pl.title(obj)
-        pl.savefig(os.path.join(dirname,obs)+"_quicklook_smooth.png",bbox_inches='tight')
+        pl.savefig(prefix+"_quicklook_smooth.png",bbox_inches='tight')
 
         pl.clf()
         dictviewer(us, vmin=vmin, vmax=vmax, cb=True)
         pl.title(obj)
-        pl.savefig(os.path.join(dirname,obs)+"_quicklook_unsharp.png",bbox_inches='tight')
+        pl.savefig(prefix+"_quicklook_unsharp.png",bbox_inches='tight')
 
 if __name__ == "__main__":
     for dirpath, dirnames, filenames in os.walk('./'):

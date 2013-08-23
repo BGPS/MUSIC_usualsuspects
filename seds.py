@@ -19,7 +19,7 @@ def make_plots(dirname, fnames):
 
     for fn in fnames:
         # each band gets listed...
-        if 'band0' not in fn:
+        if 'band0' not in fn or '.sav' not in fn:
             continue
         # templates:
         # coadd_cleanband0in_clean_music_20130815_jk000.sav
@@ -40,7 +40,7 @@ def make_plots(dirname, fnames):
 
         pl.title(obj)
         pl.legend(loc='best')
-        pl.savefig(os.path.join(dirname,obs)+"_SED.png",bbox_inches='tight')
+        pl.savefig(os.path.join(dirname,obj+obs)+"_SED.png",bbox_inches='tight')
 
 if __name__ == "__main__":
     for dirpath, dirnames, filenames in os.walk('./'):
