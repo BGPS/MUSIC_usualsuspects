@@ -1,5 +1,6 @@
 import pylab as pl
 import idlsave
+import os
 
 def load_data(obsname):
     """
@@ -9,7 +10,13 @@ def load_data(obsname):
     -------
     >>> data = load_data('gal_010.47+00.03/130820_ob3')
     """
-    filename = obsname+"_band%ii_clean_music_20130815_map.sav"
+    if 'coadd' in obsname:
+        obsdir,obsname = os.path.split(obsname)
+        filename = obsname+"_clean_music_20130815.sav"
+        filename = filename[:15]+"%i"+filename[16:]
+        filename = os.path.join(obsdir,filename)
+    else:
+        filename = obsname+"_band%ii_clean_music_20130815_map.sav"
     data = {k:idlsave.read(filename % k, verbose=False) for k in xrange(4)}
     return data
 

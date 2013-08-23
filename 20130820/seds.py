@@ -19,7 +19,7 @@ def make_plots(dirname, fnames):
         # each band gets listed...
         if 'band0' not in fn:
             continue
-        obs = fn[:10]
+        obs = fn[:11]
 
         print "Working on file ",os.path.join(obj,obs)
 

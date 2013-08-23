@@ -21,12 +21,16 @@ def make_plots(dirname, fnames):
         # each band gets listed...
         if 'band0' not in fn:
             continue
-        obs = fn[:10]
+        # templates:
+        # coadd_cleanband0in_clean_music_20130815_jk000.sav
+        # 130820_ob1_band0i_clean_music_20130815_map.sav
+        obs = "_".join(fn.split("_")[:2])
+        #obs = fn[:11]
 
-        print "Working on file ",os.path.join(obj,obs)
+        print "Working on file ",os.path.join(dirname,obs)
 
-        data = load_data(os.path.join(obj,obs))
-        sm,us = convolve_and_match(data,'W49',writefits=False)
+        data = load_data(os.path.join(dirname,obs))
+        sm,us = convolve_and_match(data,obj,writefits=False)
         flux,bg,err = sed_from_dict(sm)
 
         pl.clf()
@@ -36,7 +40,7 @@ def make_plots(dirname, fnames):
 
         pl.title(obj)
         pl.legend(loc='best')
-        pl.savefig(os.path.join(obj,obs)+"_SED.png",bbox_inches='tight')
+        pl.savefig(os.path.join(dirname,obs)+"_SED.png",bbox_inches='tight')
 
 if __name__ == "__main__":
     for dirpath, dirnames, filenames in os.walk('./'):
