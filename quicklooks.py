@@ -37,17 +37,17 @@ def make_plots(dirname, fnames):
 
         pl.clf()
         viewer(data, vmin=vmin, vmax=vmax, cb=True)
-        pl.title(obj)
+        pl.suptitle(obj)
         pl.savefig(prefix+"_quicklook.png",bbox_inches='tight')
 
         pl.clf()
         dictviewer(sm, vmin=vmin, vmax=vmax, cb=True)
-        pl.title(obj)
+        pl.suptitle(obj)
         pl.savefig(prefix+"_quicklook_smooth.png",bbox_inches='tight')
 
         pl.clf()
         dictviewer(us, vmin=vmin, vmax=vmax, cb=True)
-        pl.title(obj)
+        pl.suptitle(obj)
         pl.savefig(prefix+"_quicklook_unsharp.png",bbox_inches='tight')
 
 if __name__ == "__main__":
