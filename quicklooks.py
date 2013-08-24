@@ -52,6 +52,7 @@ def make_plots(dirname, fnames):
         pl.savefig(prefix+"_quicklook_unsharp.png",bbox_inches='tight')
 
 if __name__ == "__main__":
+    pl.hot() # select colormap
     for dirpath, dirnames, filenames in os.walk('./'):
         if dirpath != './':
             if 'neptune' in dirpath or 'g34.3' in dirpath:
