@@ -32,6 +32,7 @@ def make_plots(dirname, fnames):
         sm,us = convolve_and_match(data,obj,writefits=False)
         vmin = max([sm[2].min(),-1000])
         vmax = max([sm[2].max(),5000])
+        print obj, obs, vmin, vmax
 
         prefix = os.path.join(dirname,obj+obs)
 
