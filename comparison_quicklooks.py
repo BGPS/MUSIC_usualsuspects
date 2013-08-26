@@ -37,7 +37,7 @@ def make_plots(dirname, fnames):
     pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
-        pl.subplot(3,2,ii+1)
+        pl.subplot(2,3,ii+1)
         pl.imshow(data[k], vmin=-0.5, vmax=5)
         pl.title(k)
         pl.colorbar()
