@@ -11,7 +11,7 @@ import sys
 import os
 sys.path.append(os.path.split(os.getcwd())[0])
 
-keys = {"Band%i" % ii:'native' for ii in xrange(4)}
+keys = {"Band%i" % ii:'Band%i_native' % ii for ii in xrange(4)}
 keys['BGPS'] = 'MOSAIC_MAP_V2'
 keys['ATLASGAL'] = 'ATLASGAL'
 keys['SCUBA'] = 'scuba_850um'
