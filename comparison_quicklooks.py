@@ -26,6 +26,8 @@ def make_plots(dirname, fnames):
     for fn in fnames:
         for k,v in keys.iteritems():
             if v in fn:
+                if k in files and not 'coadd' in fn:
+                    continue
                 files[k] = os.path.join(dirname,fn)
                 data[k] = fits.getdata(os.path.join(dirname,fn))
 
