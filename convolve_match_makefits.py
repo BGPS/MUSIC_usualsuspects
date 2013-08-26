@@ -2,6 +2,7 @@ import numpy as np
 from astropy.io import fits
 import scipy.ndimage
 from astropy.nddata.convolution import make_kernel,convolve
+import os
 
 def convolve_and_match(data, objectname, headers=None, clobber=True,
         writefits=True, savepath='', unsharpscale=80):
