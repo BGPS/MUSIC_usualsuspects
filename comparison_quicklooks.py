@@ -43,7 +43,7 @@ def make_plots(dirname, fnames):
         center = coords.ICRSCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
     else:
         header0 = fits.getheader(files['BGPS'])
-        center = coords.GalacticCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
+        center = coords.GalacticCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg')).fk5
 
     fig = pl.figure(1)
     pl.clf()
