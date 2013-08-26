@@ -60,7 +60,10 @@ def make_plots(dirname, fnames):
         else:
             F.tick_labels.hide_y()
         F.add_colorbar()
-        F.recenter(center.ra.degree, center.dec.degree, 5/60.)
+        try:
+            F.recenter(center.ra.degree, center.dec.degree, 5/60.)
+        except:
+            continue
         #pl.subplot(2,3,ii+1)
         #pl.imshow(data[k], vmin=-0.5, vmax=5)
         #pl.title(k)
