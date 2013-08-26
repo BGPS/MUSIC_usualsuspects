@@ -3,7 +3,8 @@ from astropy.io import fits
 import scipy.ndimage
 from astropy.nddata.convolution import make_kernel,convolve
 
-def convolve_and_match(data, objectname, clobber=True, writefits=True, unsharpscale=80):
+def convolve_and_match(data, objectname, headers=None, clobber=True,
+        writefits=True, savepath='', unsharpscale=80):
     """
     Convolve all bands to Band 0 resolution and resample all to Band 3
     pixelization.  The data values are appropriately scaled after smoothing
@@ -41,10 +42,18 @@ def convolve_and_match(data, objectname, clobber=True, writefits=True, unsharpsc
 
     if writefits:
 
-        header = fits.Header()
-        header['CDELT1'] = pixscale
-        header['CDELT2'] = pixscale
-        ffile = fits.PrimaryHDU(data=band3, header=header)
+        if headers is None:
+            header = fits.Header()
+            header['CDELT1'] = pixscale
+            header['CDELT2'] = pixscale
+            headers = {k: header for k in data}
+
+        for k in data:
+
+            ffile = fits.PrimaryHDU(data=data[k].mapstruct.map[0], header=headers[k])
+            ffile.writeto(os.path.join(savepath,"%s_Band%i_native.fits" % (objectname,k)), clobber=clobber)
+
+        ffile = fits.PrimaryHDU(data=band3, header=headers[3])
 
     for ii in xrange(4):
         # grab the map from band i
@@ -86,10 +95,10 @@ def convolve_and_match(data, objectname, clobber=True, writefits=True, unsharpsc
         if writefits:
             ffile.data = newm
 
-            ffile.writeto("%s_Band%i_smooth.fits" % (objectname,ii), clobber=clobber)
+            ffile.writeto(os.path.join(savepath,"%s_Band%i_smooth.fits" % (objectname,ii)), clobber=clobber)
 
             ffile.data = newm - smm
 
-            ffile.writeto("%s_Band%i_smooth_unsharp.fits" % (objectname,ii), clobber=clobber)
+            ffile.writeto(os.path.join(savepath,"%s_Band%i_smooth_unsharp.fits" % (objectname,ii)), clobber=clobber)
 
     return smoothed,unsharped

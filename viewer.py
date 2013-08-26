@@ -1,6 +1,32 @@
 import pylab as pl
 import idlsave
 import os
+from astropy.io import ascii,fits
+from astropy import coordinates as coords
+import numpy as np
+
+def load_header(obsstruct):
+    tbl = ascii.read('targets.txt')
+    source_name = obsstruct['SOURCE_NAME'][0]
+    match = np.array([source_name == x.lower() for x in tbl['col1']])
+    ra,dec = tbl['col4'][match][0],tbl['col5'][match][0]
+    coord = coords.ICRSCoordinates(ra+" "+dec,unit=('hour','deg'))
+
+    header = fits.Header()
+    header['CRVAL1'] = coord.ra.degree
+    header['CRVAL2'] = coord.dec.degree
+    shape = obsstruct['MAP'][0].shape
+    header['CRPIX1'] = shape[1]/2. + 1 # may be offset by 0.5-1 pixel!?
+    header['CRPIX2'] = shape[2]/2. + 1 # may be offset by 0.5-1 pixel!?
+    header['CDELT1'] = obsstruct['OMEGA_PIX_AM'][0]**0.5 / 60
+    header['CDELT2'] = obsstruct['OMEGA_PIX_AM'][0]**0.5 / 60
+    header['CUNIT1'] = 'deg'
+    header['CUNIT2'] = 'deg'
+    header['CTYPE1'] = 'RA---TAN'
+    header['CTYPE2'] = 'DEC--TAN'
+    header['BUNIT'] = 'mJy/beam'
+
+    return header
 
 def load_data(obsname):
     """

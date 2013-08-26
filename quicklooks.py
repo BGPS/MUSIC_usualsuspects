@@ -10,7 +10,7 @@ import os
 sys.path.append(os.path.split(os.getcwd())[0])
 from convolve_match_makefits import convolve_and_match
 from sed_from_dict import sed_from_dict,plot_sed
-from viewer import load_data,viewer,dictviewer
+from viewer import load_data,viewer,dictviewer,load_header
 
 def make_plots(dirname, fnames):
     # get the highest-level directory, assume it is the target source ID
@@ -29,7 +29,8 @@ def make_plots(dirname, fnames):
         print "Working on file ",os.path.join(dirname,obs)
 
         data = load_data(os.path.join(dirname,obs))
-        sm,us = convolve_and_match(data,obj,writefits=False)
+        headers = {k: load_header(data[k]) for k in data}
+        sm,us = convolve_and_match(data,obj,headers=headers,writefits=True,savepath=dirname)
         vmin = max([sm[2].min(),-1000])
         vmax = max([sm[2].max(),5000])
         print obj, obs, vmin, vmax
