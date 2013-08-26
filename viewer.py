@@ -17,7 +17,7 @@ def load_header(obsstruct):
     header['CRVAL2'] = coord.dec.degree
     shape = obsstruct['MAP'][0].shape
     header['CRPIX1'] = shape[1]/2. + 1 # may be offset by 0.5-1 pixel!?
-    header['CRPIX2'] = shape[2]/2. + 1 # may be offset by 0.5-1 pixel!?
+    header['CRPIX2'] = shape[0]/2. + 1 # may be offset by 0.5-1 pixel!?
     header['CDELT1'] = obsstruct['OMEGA_PIX_AM'][0]**0.5 / 60
     header['CDELT2'] = obsstruct['OMEGA_PIX_AM'][0]**0.5 / 60
     header['CUNIT1'] = 'deg'
