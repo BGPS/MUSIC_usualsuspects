@@ -1,4 +1,5 @@
 from astropy.io import fits
+import aplpy
 import pylab as pl
 import idlsave
 import itertools
@@ -37,10 +38,14 @@ def make_plots(dirname, fnames):
     pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
-        pl.subplot(2,3,ii+1)
-        pl.imshow(data[k], vmin=-0.5, vmax=5)
-        pl.title(k)
-        pl.colorbar()
+        F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta')
+        F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
+        F._ax1.set_title(k)
+        F.add_colorbar()
+        #pl.subplot(2,3,ii+1)
+        #pl.imshow(data[k], vmin=-0.5, vmax=5)
+        #pl.title(k)
+        #pl.colorbar()
 
     prefix = os.path.join(dirname,obj)
     pl.savefig(prefix+"_compare_MUSIC_BGPS.png",bbox_inches='tight')
