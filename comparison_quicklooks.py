@@ -27,6 +27,9 @@ def make_plots(dirname, fnames):
                 files[k] = v
                 data[k] = fits.getdata(v)
 
+    if len(files) == 0:
+        return
+
     if 'SCUBA' in files and 'ATLASGAL' in files:
         del files['SCUBA']
         del data['SCUBA']
