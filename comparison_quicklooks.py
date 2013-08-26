@@ -1,4 +1,5 @@
 from astropy.io import fits
+from astropy import coordinates as coords
 import aplpy
 import pylab as pl
 import idlsave
@@ -37,13 +38,19 @@ def make_plots(dirname, fnames):
 
     print "Making figures for ",dirname
 
+    header0 = fits.getheader(files['Band0'])
+    center = coords.ICRSCoordinates((header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
+
     fig = pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
         F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
         F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
         F._ax1.set_title(k)
+        F.ticks.set_xformat('d.dd')
+        F.ticks.set_yformat('d.dd')
         F.add_colorbar()
+        F.recenter(center.ra.degree, center.dec.degree, 5/60.)
         #pl.subplot(2,3,ii+1)
         #pl.imshow(data[k], vmin=-0.5, vmax=5)
         #pl.title(k)
