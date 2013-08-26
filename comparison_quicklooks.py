@@ -11,7 +11,7 @@ sys.path.append(os.path.split(os.getcwd())[0])
 
 keys = {"Band%i" % ii:'native' for ii in xrange(4)}
 keys['BGPS'] = 'MOSAIC_MAP_V2'
-keys['ATLASGAL'] = 'ATASGAL'
+keys['ATLASGAL'] = 'ATLASGAL'
 keys['SCUBA'] = 'scuba_850um'
 
 def make_plots(dirname, fnames):
