@@ -38,7 +38,7 @@ def make_plots(dirname, fnames):
         del files['SCUBA']
         del data['SCUBA']
 
-    print "Making figures for ",dirname
+    print "Making figures for ",dirname, files
 
     if 'Band0' in files:
         header0 = fits.getheader(files['Band0'])
@@ -50,6 +50,7 @@ def make_plots(dirname, fnames):
     fig = pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
+        print k,fn,
         F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
         F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
         F._ax1.set_title(k)
