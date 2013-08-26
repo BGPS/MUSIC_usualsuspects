@@ -24,8 +24,8 @@ def make_plots(dirname, fnames):
     for fn in fnames:
         for k,v in keys.iteritems():
             if v in fn:
-                files[k] = v
-                data[k] = fits.getdata(v)
+                files[k] = fn
+                data[k] = fits.getdata(fn)
 
     if len(files) == 0:
         return
