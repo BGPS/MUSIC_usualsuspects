@@ -29,7 +29,7 @@ def make_plots(dirname, fnames):
         print "Working on file ",os.path.join(dirname,obs)
 
         data = load_data(os.path.join(dirname,obs))
-        headers = {k: load_header(data[k]) for k in data}
+        headers = {k: load_header(data[k].mapstruct) for k in data}
         sm,us = convolve_and_match(data,obj,headers=headers,writefits=True,savepath=dirname)
         vmin = max([sm[2].min(),-1000])
         vmax = max([sm[2].max(),5000])
