@@ -39,7 +39,7 @@ def make_plots(dirname, fnames):
     print "Making figures for ",dirname
 
     header0 = fits.getheader(files['Band0'])
-    center = coords.ICRSCoordinates((header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
+    center = coords.ICRSCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
 
     fig = pl.figure(1)
     pl.clf()
