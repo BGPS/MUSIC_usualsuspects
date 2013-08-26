@@ -35,10 +35,12 @@ def make_plots(dirname, fnames):
         del files['SCUBA']
         del data['SCUBA']
 
-    pl.figure(1)
+    print "Making figures for ",dirname
+
+    fig = pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
-        F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta')
+        F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
         F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
         F._ax1.set_title(k)
         F.add_colorbar()
