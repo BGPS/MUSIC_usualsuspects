@@ -24,7 +24,7 @@ def load_header(obsstruct):
     header['CUNIT2'] = 'deg'
     header['CTYPE1'] = 'RA---TAN'
     header['CTYPE2'] = 'DEC--TAN'
-    header['BUNIT'] = 'mJy/beam'
+    header['BUNIT'] = 'Jy/beam'
 
     return header
 

@@ -35,7 +35,7 @@ def convolve_and_match(data, objectname, headers=None, clobber=True,
     unsharped = {}
 
     # the band 3 map is used as the reference pixel scale
-    band3 = data[3].mapstruct.map[0]
+    band3 = data[3].mapstruct.map[0] / 1000.0
     yy1,xx1 = grid1 = np.indices(band3.shape)
 
     pixscale = float(data[3].mapstruct['OMEGA_PIX_AM']**0.5 / 60.)
@@ -51,14 +51,14 @@ def convolve_and_match(data, objectname, headers=None, clobber=True,
 
         for k in data:
 
-            ffile = fits.PrimaryHDU(data=data[k].mapstruct.map[0], header=headers[k])
+            ffile = fits.PrimaryHDU(data=data[k].mapstruct.map[0]/1000., header=headers[k])
             ffile.writeto(os.path.join(savepath,"%s_Band%i_native.fits" % (objectname,k)), clobber=clobber)
 
         ffile = fits.PrimaryHDU(data=band3, header=headers[3])
 
     for ii in xrange(4):
         # grab the map from band i
-        m = data[ii].mapstruct.map[0]
+        m = data[ii].mapstruct.map[0] / 1000.0
         # ratio of map sizes (assumes they're symmetric, sort of)
         ratio = m.shape[0]/float(band3.shape[0])
 
