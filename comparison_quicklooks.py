@@ -52,7 +52,10 @@ def make_plots(dirname, fnames):
         F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
         F._ax1.set_title(k)
         F.tick_labels.set_xformat('d.dd')
-        F.tick_labels.set_yformat('d.dd')
+        if (ii-1) % 3 == 0:
+            F.tick_labels.set_yformat('d.dd')
+        else:
+            F.tick_labels.hide_y()
         F.add_colorbar()
         F.recenter(center.ra.degree, center.dec.degree, 5/60.)
         #pl.subplot(2,3,ii+1)
