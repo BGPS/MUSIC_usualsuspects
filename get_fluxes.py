@@ -38,6 +38,10 @@ def get_peaks(dirname, fnames):
     for ii,(k,fn) in enumerate(files.iteritems()):
         d = data[k]
         OK = d==d
+        y,x = np.indices(d.shape,dtype='float')
+        rr = ((x-d.shape[1]/2)**2 + (y-d.shape[0]/2)**2)**0.5
+        OK *= rr < 10
+
         if OK.sum() == 0:
             continue
         print k,fn,d[OK].max()
