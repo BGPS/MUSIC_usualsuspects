@@ -56,7 +56,7 @@ def make_plots(dirname, fnames):
     fig = pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
-        print k,fn,
+        print k,fn,data[k].max()
         try:
             F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
             F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
