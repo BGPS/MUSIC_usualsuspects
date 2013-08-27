@@ -1,5 +1,6 @@
 from astropy.io import fits
 from astropy import coordinates as coords
+import montage
 import aplpy
 import pylab as pl
 import idlsave
@@ -56,15 +57,19 @@ def make_plots(dirname, fnames):
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
         print k,fn,
-        F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
-        F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
-        F._ax1.set_title(k)
-        F.tick_labels.set_xformat('d.dd')
-        if (ii) % 3 == 0:
-            F.tick_labels.set_yformat('d.dd')
-        else:
-            F.tick_labels.hide_y()
-        F.add_colorbar()
+        try:
+            F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
+            F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
+            F._ax1.set_title(k)
+            F.tick_labels.set_xformat('d.dd')
+            if (ii) % 3 == 0:
+                F.tick_labels.set_yformat('d.dd')
+            else:
+                F.tick_labels.hide_y()
+            F.add_colorbar()
+        except montage.MontageError as e:
+            print "Montage error: ",e
+            continue
         try:
             F.recenter(center.ra.degree, center.dec.degree, 5/60.)
         except:
