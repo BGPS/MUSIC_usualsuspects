@@ -36,8 +36,12 @@ def get_peaks(dirname, fnames):
 
     peaks = {}
     for ii,(k,fn) in enumerate(files.iteritems()):
-        print k,fn,data[k][data[k]==data[k]].max()
-        peaks[k] = data[k][data[k]==data[k]].max()
+        d = data[k]
+        OK = d==d
+        if OK.sum() == 0:
+            continue
+        print k,fn,d[OK].max()
+        peaks[k] = d[OK].max()
 
     return peaks
 
