@@ -1,6 +1,5 @@
 from astropy.io import fits
 from astropy import coordinates as coords
-import montage
 import aplpy
 import pylab as pl
 import idlsave
@@ -67,7 +66,7 @@ def make_plots(dirname, fnames):
             else:
                 F.tick_labels.hide_y()
             F.add_colorbar()
-        except montage.MontageError as e:
+        except Exception as e:
             print "Montage error: ",e
             continue
         try:
