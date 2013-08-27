@@ -43,9 +43,14 @@ def make_plots(dirname, fnames):
     if 'Band0' in files:
         header0 = fits.getheader(files['Band0'])
         center = coords.ICRSCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg'))
-    else:
+    elif 'BGPS' in files:
         header0 = fits.getheader(files['BGPS'])
         center = coords.GalacticCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg')).fk5
+    elif 'ATLASGAL' in files:
+        header0 = fits.getheader(files['ATLASGAL'])
+        center = coords.GalacticCoordinates("%s %s" % (header0['CRVAL1'],header0['CRVAL2']),unit=('deg','deg')).fk5
+    else:
+        raise ValueError("Really?  No BGPS, MUSIC, or ATLASGAL?  WTF.  BRB.  BBQ.")
 
     fig = pl.figure(1)
     pl.clf()
