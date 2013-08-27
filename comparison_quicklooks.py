@@ -52,10 +52,13 @@ def make_plots(dirname, fnames):
     else:
         raise ValueError("Really?  No BGPS, MUSIC, or ATLASGAL?  WTF.  BRB.  BBQ.")
 
+    for ii,(k,fn) in enumerate(files.iteritems()):
+        print k,fn,data[k][data[k]==data[k]].max()
+
     fig = pl.figure(1)
     pl.clf()
     for ii,(k,fn) in enumerate(files.iteritems()):
-        print k,fn,data[k][data[k]==data[k]].max()
+        #print k,fn,data[k][data[k]==data[k]].max()
         try:
             F = aplpy.FITSFigure(fn, subplot=(2,3,ii+1), convention='calabretta', figure=fig, north=True)
             F.show_colorscale(vmin=-0.5,vmax=5,cmap=pl.cm.hot)
