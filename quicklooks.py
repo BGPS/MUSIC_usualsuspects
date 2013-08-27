@@ -31,7 +31,7 @@ def make_plots(dirname, fnames):
         data = load_data(os.path.join(dirname,obs))
         headers = {k: load_header(data[k].mapstruct) for k in data}
         sm,us = convolve_and_match(data,obj,headers=headers,writefits=True,savepath=dirname)
-        vmin = max([sm[2].min(),-1000])
+        vmin = -1000 #max([sm[2].min(),-1000])
         vmax = max([sm[2].max(),5000])
         print obj, obs, vmin, vmax
 
